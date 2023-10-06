@@ -59,4 +59,5 @@ private: // メンバ変数
 
 	ViewProjection viewProjection_;
 
+	Model* modelSkydome_ = nullptr;
 };

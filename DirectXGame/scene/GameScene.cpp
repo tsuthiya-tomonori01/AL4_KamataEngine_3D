@@ -4,7 +4,11 @@
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() {}
+GameScene::~GameScene() {
+
+	delete modelSkydome_;
+
+}
 
 void GameScene::Initialize() {
 
@@ -22,6 +26,7 @@ void GameScene::Initialize() {
 
 	player_->Initialize(model_.get(), textureHandle_);
 
+	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
 
 }
 
