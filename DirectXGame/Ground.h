@@ -3,9 +3,8 @@
 #include "Model.h"
 #include "WorldTransform.h"
 
-class Skydome {
+class Ground {
 public:
-
 	void Initialize(Model* model);
 
 	void Update();
@@ -17,5 +16,6 @@ private:
 	WorldTransform worldTransform_;
 
 	Model* model_ = nullptr;
+
 
 };

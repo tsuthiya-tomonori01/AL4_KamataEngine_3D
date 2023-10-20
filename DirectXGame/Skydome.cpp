@@ -1,11 +1,24 @@
 ﻿#include "Skydome.h"
+#include <cassert>
 
-void Skydome::Initialize() {}
+void Skydome::Initialize(Model* model) {
 
-void Skydome::Update() {}
+    assert(model);
 
-void Skydome::Draw() {
+    model_ = model;
 
+    worldTransform_.Initialize();
 
+}
 
+void Skydome::Update() {
+
+    worldTransform_.TransferMatrix(); 
+     
+}
+
+void Skydome::Draw(ViewProjection& viewProjection) { 
+
+    model_->Draw(worldTransform_, viewProjection);
+   
 }

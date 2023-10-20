@@ -1,13 +1,12 @@
 #include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
+#include "AxisIndicator.h"
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() {
-
-	delete modelSkydome_;
-
+GameScene::~GameScene() { 
+	delete debugCamera_; 
 }
 
 void GameScene::Initialize() {
@@ -16,23 +15,62 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance(); 
 	
-	textureHandle_ = TextureManager::Load("mario.jpg");
+	//軸方向表示の表示を有効にする
+	AxisIndicator::GetInstance()->SetVisible(true);
+	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 
 	viewProjection_.Initialize();
+	viewProjection_.farZ = 1600.0f;
+	viewProjection_.UpdateMatrix();
 
-	model_.reset(Model::Create());
+	debugCamera_ = new DebugCamera(1280, 720);
+	debugCamera_->SetFarZ(1600.0f);
+
+	model_.reset(Model::CreateFromOBJ("float", true));
 
 	player_ = std::make_unique<Player>();
+	player_->Initialize(model_.get());
 
-	player_->Initialize(model_.get(), textureHandle_);
+	modelSkydome_.reset(Model::CreateFromOBJ("skydome", true));
 
-	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
+	skydome_ = std::make_unique<Skydome>();
+	skydome_->Initialize(modelSkydome_.get());
+
+	modelGround_.reset(Model::CreateFromOBJ("ground", true));
+
+	ground_ = std::make_unique<Ground>();
+	ground_->Initialize(modelGround_.get());
 
 }
 
 void GameScene::Update() {
 
 	player_->Update();
+	skydome_->Update();
+	ground_->Update();
+	debugCamera_->Update();
+
+	#ifdef _DEBUG
+
+	  if (input_->TriggerKey(DIK_Q)) 
+	  {
+		isDebugCameraActive_;
+	  }
+
+    #endif // 
+
+    if (isDebugCameraActive_) {
+		debugCamera_->Update();
+
+		viewProjection_.matView = debugCamera_->GetViewProjection().matView; 
+		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+
+		viewProjection_.TransferMatrix();
+	}
+	else 
+	{
+		viewProjection_.UpdateMatrix();
+	}
 
 }
 
@@ -64,6 +102,8 @@ void GameScene::Draw() {
 	/// </summary>
 
 	player_->Draw(viewProjection_);
+	skydome_->Draw(viewProjection_);
+	ground_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -73,6 +113,7 @@ void GameScene::Draw() {
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(commandList);
 
+	
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
