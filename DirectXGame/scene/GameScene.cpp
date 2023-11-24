@@ -24,7 +24,7 @@ void GameScene::Initialize() {
 	viewProjection_.UpdateMatrix();
 
 	debugCamera_ = new DebugCamera(1280, 720);
-	debugCamera_->SetFarZ(1600.0f);
+	//debugCamera_->SetFarZ(1600.0f);
 
 	model_.reset(Model::CreateFromOBJ("float", true));
 
@@ -41,6 +41,12 @@ void GameScene::Initialize() {
 	ground_ = std::make_unique<Ground>();
 	ground_->Initialize(modelGround_.get());
 
+	followCamera_ = std::make_unique<FollowCamera>();
+	followCamera_->Initialize();
+	followCamera_->SetTarget(&player_->GetWorldTransform());
+
+	player_->SetViewProjection(&followCamera_->GetViewProjection());
+
 }
 
 void GameScene::Update() {
@@ -48,13 +54,12 @@ void GameScene::Update() {
 	player_->Update();
 	skydome_->Update();
 	ground_->Update();
-	debugCamera_->Update();
 
 	#ifdef _DEBUG
 
 	  if (input_->TriggerKey(DIK_Q)) 
 	  {
-		isDebugCameraActive_;
+		//isDebugCameraActive_;
 	  }
 
     #endif // 
@@ -65,11 +70,16 @@ void GameScene::Update() {
 		viewProjection_.matView = debugCamera_->GetViewProjection().matView; 
 		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
 
-		viewProjection_.TransferMatrix();
+		viewProjection_.UpdateMatrix();
 	}
 	else 
 	{
-		viewProjection_.UpdateMatrix();
+		followCamera_->Update();
+
+		viewProjection_.matView = followCamera_->GetViewProjection().matView;
+		viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
+
+		viewProjection_.TransferMatrix();
 	}
 
 }

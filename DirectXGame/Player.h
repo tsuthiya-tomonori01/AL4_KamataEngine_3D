@@ -1,19 +1,47 @@
 ﻿#pragma once
 
-#include "WorldTransform.h"
+#include "Input.h"
 #include "Model.h"
+#include "WorldTransform.h"
+#include "ViewProjection.h"
 
 class Player {
 public:
-	void Initialize(Model* model);
+	void Initialize(Model* modelBody, Model* modelHead, Model* modelL_arm, Model* modelR_arm);
 
 	void Update();
 
 	void Draw(ViewProjection& viewProjection);
 
+	const WorldTransform& GetWorldTransform() { return worldTransform_; }
+
+	void SetViewProjection(const ViewProjection* viewProjection) {
+		viewProjection_ = viewProjection;
+	}
+
+	//浮遊ギミック初期化
+	void InitializeFloatingGimmick();
+
+	//浮遊ギミックに更新
+	void UpdateFloatingGimmick();
+
 private:
+	 
 	WorldTransform worldTransform_;
 
-	Model* model_ = nullptr;
+	WorldTransform worldTransformBody_;
+	WorldTransform worldTransformHead_;
+	WorldTransform worldTransformL_arm_;
+	WorldTransform worldTransformR_arm_;
 
+	Model* modelBody_ = nullptr;
+	Model* modelHead_ = nullptr;
+	Model* modelL_arm_ = nullptr;
+	Model* modelR_arm_ = nullptr;
+
+	const ViewProjection* viewProjection_ = nullptr; 
+
+	Vector3 velocity_ = {};
+
+	float floatingParameter_ = 0.0f;
 };
