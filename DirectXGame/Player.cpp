@@ -15,7 +15,7 @@ void Player::Initialize(Model* modelBody, Model* modelHead, Model* modelL_arm, M
 	modelR_arm_ = modelR_arm;
 
 	worldTransform_.Initialize();
-	worldTransform_.translation_.y = 0.2f;
+	worldTransform_.translation_.y = 0.0f;
 }
 
 void Player::Update() { 
@@ -51,6 +51,13 @@ void Player::Update() {
 
 void Player::Draw(ViewProjection& viewProjection) {
 
+	modelBody_->Draw(worldTransformBody_,viewProjection);
+
+	modelHead_->Draw(worldTransformHead_, viewProjection);
+
+	modelL_arm_->Draw(worldTransformL_arm_, viewProjection);
+
+	modelR_arm_->Draw(worldTransformR_arm_, viewProjection);
 
 }
 
