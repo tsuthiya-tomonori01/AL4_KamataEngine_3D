@@ -5,14 +5,11 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-void Player::Initialize(Model* modelBody, Model* modelHead, Model* modelL_arm, Model* modelR_arm) {
+void Player::Initialize(Model* model) {
 
-	assert(modelBody,modelHead,modelL_arm,modelR_arm);
+	assert(model);
 
-	modelBody_ = modelBody;
-	modelHead_ = modelHead;
-	modelL_arm_ = modelL_arm;
-	modelR_arm_ = modelR_arm;
+	model_ = model;
 
 	worldTransform_.Initialize();
 	worldTransform_.translation_.y = 0.2f;
@@ -49,36 +46,8 @@ void Player::Update() {
 
 }
 
-void Player::Draw(ViewProjection& viewProjection) {
-
-
-}
-
-void Player::InitializeFloatingGimmick() {
-
-	floatingParameter_ = 0.0f;
-
-}
-
-void Player::UpdateFloatingGimmick() { 
+void Player::Draw(ViewProjection& viewProjection) { 
 	
-	//浮遊移動のサイクル
-	const uint16_t A_frame = 120;
-
-	//1フレームでのパラメーター加算値
-	const float Step = 2.0f * M_PI / A_frame;
-
-	//パラメーターを1ステップ分加算
-	floatingParameter_ += Step;
-
-	//２πを超えたら０に戻す
-	floatingParameter_ = std::fmod(floatingParameter_, 2.0f * M_PI);
-
-	//
-	const float Width_F = 0.5f;
-
-	//
-	worldTransform_.translation_.y = std::sin(floatingParameter_) * Width_F;
-
+	model_->Draw(worldTransform_, viewProjection); 
 }
 

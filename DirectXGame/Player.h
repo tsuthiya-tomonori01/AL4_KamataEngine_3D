@@ -7,7 +7,7 @@
 
 class Player {
 public:
-	void Initialize(Model* modelBody, Model* modelHead, Model* modelL_arm, Model* modelR_arm);
+	void Initialize(Model* model);
 
 	void Update();
 
@@ -19,25 +19,11 @@ public:
 		viewProjection_ = viewProjection;
 	}
 
-	//浮遊ギミック初期化
-	void InitializeFloatingGimmick();
-
-	//浮遊ギミックに更新
-	void UpdateFloatingGimmick();
-
 private:
 	 
 	WorldTransform worldTransform_;
 
-	WorldTransform worldTransformBody_;
-	WorldTransform worldTransformHead_;
-	WorldTransform worldTransformL_arm_;
-	WorldTransform worldTransformR_arm_;
-
-	Model* modelBody_ = nullptr;
-	Model* modelHead_ = nullptr;
-	Model* modelL_arm_ = nullptr;
-	Model* modelR_arm_ = nullptr;
+	Model* model_ = nullptr;
 
 	const ViewProjection* viewProjection_ = nullptr; 
 
