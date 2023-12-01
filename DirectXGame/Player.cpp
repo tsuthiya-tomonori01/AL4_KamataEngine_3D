@@ -5,18 +5,14 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-void Player::Initialize(Model* model) {
+void Player::Initialize(const std::vector<Model*>& models) {
 
-	assert(model);
+	BaseCharacter::Initialize(models);
 
 	/*modelBody_ = modelBody;
 	modelHead_ = modelHead;
 	modelL_arm_ = modelL_arm;
 	modelR_arm_ = modelR_arm;*/
-
-	model_ = model;
-
-	worldTransform_.Initialize();
 
 	worldTransform_.translation_.x = 0.0f;
 	worldTransform_.translation_.y = 0.0f;
@@ -24,6 +20,8 @@ void Player::Initialize(Model* model) {
 }
 
 void Player::Update() { 
+
+	BaseCharacter::Update();
 
 	XINPUT_STATE joyState;
 	
@@ -53,7 +51,7 @@ void Player::Update() {
 
 }
 
-void Player::Draw(ViewProjection& viewProjection) {
+void Player::Draw(const ViewProjection& viewProjection) {
 
 	/*modelBody_->Draw(worldTransformBody_,viewProjection);
 
@@ -63,7 +61,7 @@ void Player::Draw(ViewProjection& viewProjection) {
 
 	modelR_arm_->Draw(worldTransformR_arm_, viewProjection);*/
 
-	model_->Draw(worldTransform_, viewProjection);
+	
 
 }
 

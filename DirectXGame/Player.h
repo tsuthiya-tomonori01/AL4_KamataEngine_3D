@@ -7,13 +7,15 @@
 
 #include "BaseCharacter.h"
 
-class Player {
+class Player : public BaseCharacter {
+
 public:
-	void Initialize(Model* model);
+
+	void Initialize(const std::vector<Model*>& model) override;
 
 	void Update();
 
-	void Draw(ViewProjection& viewProjection);
+	void Draw(const ViewProjection& viewProjection) override;
 
 	const WorldTransform& GetWorldTransform() { return worldTransform_; }
 

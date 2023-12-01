@@ -33,8 +33,10 @@ void GameScene::Initialize() {
 
 	model_.reset(Model::CreateFromOBJ("float", true));
 
+	std::vector<Model*> model = {model_.get()};
+
 	player_ = std::make_unique<Player>();
-	player_->Initialize(model_.get());
+	player_->Initialize(model);
 
 	modelSkydome_.reset(Model::CreateFromOBJ("skydome", true));
 
