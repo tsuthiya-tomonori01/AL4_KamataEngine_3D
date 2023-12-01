@@ -32,6 +32,7 @@ void GameScene::Initialize() {
 	modelFighterR_arm.reset(Model::CreateFromOBJ("", true));
 
 	player_ = std::make_unique<Player>();
+	player_->Initialize(modelFighterBody_.get());
 
 	modelSkydome_.reset(Model::CreateFromOBJ("skydome", true));
 

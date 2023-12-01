@@ -5,6 +5,8 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 
+#include "BaseCharacter.h"
+
 class Player {
 public:
 	void Initialize(Model* modelBody, Model* modelHead, Model* modelL_arm, Model* modelR_arm);
@@ -16,6 +18,7 @@ public:
 	const WorldTransform& GetWorldTransform() { return worldTransform_; }
 
 	void SetViewProjection(const ViewProjection* viewProjection) {
+
 		viewProjection_ = viewProjection;
 	}
 
