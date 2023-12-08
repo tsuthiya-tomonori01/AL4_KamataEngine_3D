@@ -5,9 +5,35 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+void Player::InitializeFloatingGimmick() { floatingParameter_ = 0.0f; }
+
+void Player::UpdateFloatingGimmick() {
+
+	// 浮遊移動のサイクル
+	const uint16_t A_frame = 60;
+
+	// 1フレームでのパラメーター加算値
+	const float Step = (float)(2.0f * M_PI / A_frame);
+	// static_cast<float>(2.0f* M_PI / A_frame);
+
+	// パラメーターを1ステップ分加算
+	floatingParameter_ += Step;
+
+	// ２πを超えたら０に戻す
+	floatingParameter_ = (float)std::fmod(floatingParameter_, 2.0f * M_PI);
+	//
+	const float Width_F = 0.5f;
+
+	//
+	worldTransformBody_.translation_.y = std::sin(floatingParameter_) * Width_F;
+}
+
 void Player::Initialize(Model* modelBody, Model* modelHead, Model* modelL_arm, Model* modelR_arm) {
 
-	assert(modelBody,modelHead,modelL_arm,modelR_arm);
+	assert(modelBody);
+	assert(modelHead);
+	assert(modelL_arm);
+	assert(modelR_arm);
 
 	modelBody_ = modelBody;
 	modelHead_ = modelHead;
@@ -16,6 +42,12 @@ void Player::Initialize(Model* modelBody, Model* modelHead, Model* modelL_arm, M
 
 	worldTransform_.Initialize();
 	worldTransform_.translation_.y = 0.0f;
+
+	InitializeFloatingGimmick();
+
+	worldTransformHead_.parent_ = &worldTransformBody_;
+	worldTransformL_arm_.parent_ = &worldTransformBody_;
+	worldTransformR_arm_.parent_ = &worldTransformBody_;
 }
 
 void Player::Update() { 
@@ -39,14 +71,18 @@ void Player::Update() {
 		// ここでカメラの角度分進ベクトルを回転させてる
 		velocity_ = TransformNormal(velocity_, rotate);
 
-		worldTransform_.translation_ = Add(worldTransform_.translation_, velocity_);
+		worldTransformBody_.translation_ = Add(worldTransformBody_.translation_, velocity_);
 
-		worldTransform_.rotation_.y = std::atan2(velocity_.x, velocity_.z);
+		worldTransformBody_.rotation_.y = std::atan2(velocity_.x, velocity_.z);
 		//worldTransform_.rotation_.x = std::atan2(-velocity_.y, velocity_.z);
 	}
 
-	worldTransform_.UpdateMatrix(); 
+	UpdateFloatingGimmick();
 
+	worldTransformBody_.UpdateMatrix(); 
+	worldTransformHead_.UpdateMatrix();
+	worldTransformL_arm_.UpdateMatrix();
+	worldTransformR_arm_.UpdateMatrix();
 }
 
 void Player::Draw(ViewProjection& viewProjection) {
@@ -61,31 +97,5 @@ void Player::Draw(ViewProjection& viewProjection) {
 
 }
 
-void Player::InitializeFloatingGimmick() {
 
-	floatingParameter_ = 0.0f;
-
-}
-
-void Player::UpdateFloatingGimmick() { 
-	
-	//浮遊移動のサイクル
-	const uint16_t A_frame = 120;
-
-	//1フレームでのパラメーター加算値
-	const float Step = 2.0f * M_PI / A_frame;
-
-	//パラメーターを1ステップ分加算
-	floatingParameter_ += Step;
-
-	//２πを超えたら０に戻す
-	floatingParameter_ = std::fmod(floatingParameter_, 2.0f * M_PI);
-
-	//
-	const float Width_F = 0.5f;
-
-	//
-	worldTransform_.translation_.y = std::sin(floatingParameter_) * Width_F;
-
-}
 

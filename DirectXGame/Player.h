@@ -34,10 +34,10 @@ private:
 	WorldTransform worldTransformL_arm_;
 	WorldTransform worldTransformR_arm_;
 
-	Model* modelBody_ = nullptr;
-	Model* modelHead_ = nullptr;
-	Model* modelL_arm_ = nullptr;
-	Model* modelR_arm_ = nullptr;
+	Model* modelBody_;
+	Model* modelHead_;
+	Model* modelL_arm_;
+	Model* modelR_arm_;
 
 	const ViewProjection* viewProjection_ = nullptr; 
 

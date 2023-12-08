@@ -26,12 +26,13 @@ void GameScene::Initialize() {
 	debugCamera_ = new DebugCamera(1280, 720);
 	//debugCamera_->SetFarZ(1600.0f);
 
-	modelFighterBody_.reset(Model::CreateFromOBJ("", true));
-	modelFighterHead_.reset(Model::CreateFromOBJ("", true));
-	modelFighterL_arm.reset(Model::CreateFromOBJ("", true));
-	modelFighterR_arm.reset(Model::CreateFromOBJ("", true));
+	modelFighterBody_.reset(Model::CreateFromOBJ("float_Body", true));
+	modelFighterHead_.reset(Model::CreateFromOBJ("float_Head", true));
+	modelFighterL_arm.reset(Model::CreateFromOBJ("float_L_arm", true));
+	modelFighterR_arm.reset(Model::CreateFromOBJ("float_r_arm", true));
 
 	player_ = std::make_unique<Player>();
+	player_->Initialize(modelFighterBody_.get(),modelFighterHead_.get(),modelFighterL_arm.get(),modelFighterR_arm.get());
 
 	modelSkydome_.reset(Model::CreateFromOBJ("skydome", true));
 
