@@ -5,29 +5,6 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-void Player::InitializeFloatingGimmick() { floatingParameter_ = 0.0f; }
-
-void Player::UpdateFloatingGimmick() {
-
-	// 浮遊移動のサイクル
-	const uint16_t A_frame = 60;
-
-	// 1フレームでのパラメーター加算値
-	const float Step = (float)(2.0f * M_PI / A_frame);
-	// static_cast<float>(2.0f* M_PI / A_frame);
-
-	// パラメーターを1ステップ分加算
-	floatingParameter_ += Step;
-
-	// ２πを超えたら０に戻す
-	floatingParameter_ = (float)std::fmod(floatingParameter_, 2.0f * M_PI);
-	//
-	const float Width_F = 0.5f;
-
-	//
-	worldTransformBody_.translation_.y = std::sin(floatingParameter_) * Width_F;
-}
-
 void Player::Initialize(Model* modelBody, Model* modelHead, Model* modelL_arm, Model* modelR_arm) {
 
 	assert(modelBody);
@@ -97,5 +74,26 @@ void Player::Draw(ViewProjection& viewProjection) {
 
 }
 
+void Player::InitializeFloatingGimmick() { floatingParameter_ = 0.0f; }
 
+void Player::UpdateFloatingGimmick() {
+
+	// 浮遊移動のサイクル
+	const uint16_t A_frame = 60;
+
+	// 1フレームでのパラメーター加算値
+	const float Step = (float)(2.0f * M_PI / A_frame);
+	// static_cast<float>(2.0f* M_PI / A_frame);
+
+	// パラメーターを1ステップ分加算
+	floatingParameter_ += Step;
+
+	// ２πを超えたら０に戻す
+	floatingParameter_ = (float)std::fmod(floatingParameter_, 2.0f * M_PI);
+	//
+	const float Width_F = 0.5f;
+
+	//
+	worldTransformBody_.translation_.y = std::sin(floatingParameter_) * Width_F;
+}
 
