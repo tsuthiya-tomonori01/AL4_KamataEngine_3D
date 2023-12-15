@@ -13,7 +13,7 @@ public:
 
 	void Draw(ViewProjection& viewProjection);
 
-	const WorldTransform& GetWorldTransform() { return worldTransform_; }
+	const WorldTransform& GetWorldTransform() { return worldTransformBody_; }
 
 	void SetViewProjection(const ViewProjection* viewProjection) {
 		viewProjection_ = viewProjection;

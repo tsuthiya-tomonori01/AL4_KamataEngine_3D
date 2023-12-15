@@ -17,8 +17,19 @@ void Player::Initialize(Model* modelBody, Model* modelHead, Model* modelL_arm, M
 	modelL_arm_ = modelL_arm;
 	modelR_arm_ = modelR_arm;
 
-	worldTransform_.Initialize();
-	worldTransform_.translation_.y = 0.0f;
+	worldTransformBody_.Initialize();
+	worldTransformHead_.Initialize();
+	worldTransformL_arm_.Initialize();
+	worldTransformR_arm_.Initialize();
+	
+	worldTransformBody_.translation_.y = 0.0f;
+	worldTransformHead_.translation_.y = 1.5f;
+
+	worldTransformL_arm_.translation_.y = 1.25f;
+	worldTransformL_arm_.translation_.x = -0.5f;
+
+	worldTransformR_arm_.translation_.y = 1.25f;
+	worldTransformR_arm_.translation_.x = 0.5f;
 
 	InitializeFloatingGimmick();
 
@@ -51,7 +62,6 @@ void Player::Update() {
 		worldTransformBody_.translation_ = Add(worldTransformBody_.translation_, velocity_);
 
 		worldTransformBody_.rotation_.y = std::atan2(velocity_.x, velocity_.z);
-		//worldTransform_.rotation_.x = std::atan2(-velocity_.y, velocity_.z);
 	}
 
 	UpdateFloatingGimmick();
@@ -91,7 +101,7 @@ void Player::UpdateFloatingGimmick() {
 	// ２πを超えたら０に戻す
 	floatingParameter_ = (float)std::fmod(floatingParameter_, 2.0f * M_PI);
 	//
-	const float Width_F = 0.5f;
+	const float Width_F = 0.25f;
 
 	//
 	worldTransformBody_.translation_.y = std::sin(floatingParameter_) * Width_F;

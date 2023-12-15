@@ -29,7 +29,7 @@ void GameScene::Initialize() {
 	modelFighterBody_.reset(Model::CreateFromOBJ("float_Body", true));
 	modelFighterHead_.reset(Model::CreateFromOBJ("float_Head", true));
 	modelFighterL_arm.reset(Model::CreateFromOBJ("float_L_arm", true));
-	modelFighterR_arm.reset(Model::CreateFromOBJ("float_r_arm", true));
+	modelFighterR_arm.reset(Model::CreateFromOBJ("float_R_arm", true));
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize(modelFighterBody_.get(),modelFighterHead_.get(),modelFighterL_arm.get(),modelFighterR_arm.get());
