@@ -9,11 +9,6 @@ void Player::Initialize(const std::vector<Model*>& models) {
 
 	BaseCharacter::Initialize(models);
 
-	/*modelBody_ = modelBody;
-	modelHead_ = modelHead;
-	modelL_arm_ = modelL_arm;
-	modelR_arm_ = modelR_arm;*/
-
 	worldTransform_.translation_.x = 0.0f;
 	worldTransform_.translation_.y = 0.0f;
 	worldTransform_.translation_.z = 0.0f;
@@ -53,43 +48,41 @@ void Player::Update() {
 
 void Player::Draw(const ViewProjection& viewProjection) {
 
-	/*modelBody_->Draw(worldTransformBody_,viewProjection);
+	modelBody_->Draw(worldTransformBody_,viewProjection);
 
 	modelHead_->Draw(worldTransformHead_, viewProjection);
 
 	modelL_arm_->Draw(worldTransformL_arm_, viewProjection);
 
-	modelR_arm_->Draw(worldTransformR_arm_, viewProjection);*/
-
-	
+	modelR_arm_->Draw(worldTransformR_arm_, viewProjection);
 
 }
 
-//void Player::InitializeFloatingGimmick() {
-//
-//	floatingParameter_ = 0.0f;
-//
-//}
+void Player::InitializeFloatingGimmick() {
 
-//void Player::UpdateFloatingGimmick() { 
-//	
-//	//浮遊移動のサイクル
-//	const uint16_t A_frame = 120;
-//
-//	//1フレームでのパラメーター加算値
-//	const float Step = 2.0f * M_PI / A_frame;
-//
-//	//パラメーターを1ステップ分加算
-//	floatingParameter_ += Step;
-//
-//	//２πを超えたら０に戻す
-//	floatingParameter_ = std::fmod(floatingParameter_, 2.0f * M_PI);
-//
-//	//
-//	const float Width_F = 0.5f;
-//
-//	//
-//	worldTransform_.translation_.y = std::sin(floatingParameter_) * Width_F;
-//
-//}
+	floatingParameter_ = 0.0f;
+
+}
+
+void Player::UpdateFloatingGimmick() { 
+	
+	//浮遊移動のサイクル
+	const uint16_t A_frame = 120;
+
+	//1フレームでのパラメーター加算値
+	const float Step = 2.0f * M_PI / A_frame;
+
+	//パラメーターを1ステップ分加算
+	floatingParameter_ += Step;
+
+	//２πを超えたら０に戻す
+	floatingParameter_ = std::fmod(floatingParameter_, 2.0f * M_PI);
+
+	//
+	const float Width_F = 0.5f;
+
+	//
+	worldTransform_.translation_.y = std::sin(floatingParameter_) * Width_F;
+
+}
 
