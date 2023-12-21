@@ -9,9 +9,10 @@ void Player::Initialize(const std::vector<Model*>& models) {
 
 	BaseCharacter::Initialize(models);
 
-	worldTransform_.translation_.x = 0.0f;
-	worldTransform_.translation_.y = 0.0f;
-	worldTransform_.translation_.z = 0.0f;
+	worldTransformBody_.Initialize();
+	worldTransformHead_.Initialize();
+	worldTransformL_arm_.Initialize();
+	worldTransformR_arm_.Initialize();
 }
 
 void Player::Update() { 
@@ -41,9 +42,6 @@ void Player::Update() {
 
 		worldTransform_.rotation_.y = std::atan2(velocity_.x, velocity_.z);
 	}
-
-	worldTransform_.UpdateMatrix(); 
-
 }
 
 void Player::Draw(const ViewProjection& viewProjection) {
