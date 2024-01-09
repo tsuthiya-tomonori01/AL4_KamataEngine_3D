@@ -33,7 +33,9 @@ void GameScene::Initialize() {
 
 	model_.reset(Model::CreateFromOBJ("float", true));
 
-	std::vector<Model*> model = {model_.get()};
+	std::vector<Model*> model = {
+	    modelFighterBody_.get(), modelFighterHead_.get(), modelFighterL_arm.get(),
+	    modelFighterR_arm.get()};
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize(model);

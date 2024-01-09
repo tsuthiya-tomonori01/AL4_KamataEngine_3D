@@ -45,15 +45,15 @@ void Player::Update() {
 }
 
 void Player::Draw(const ViewProjection& viewProjection) {
-
-	modelBody_->Draw(worldTransformBody_,viewProjection);
-
+	
+	modelBody_->Draw(worldTransformBody_, viewProjection);
+	
 	modelHead_->Draw(worldTransformHead_, viewProjection);
 
 	modelL_arm_->Draw(worldTransformL_arm_, viewProjection);
 
 	modelR_arm_->Draw(worldTransformR_arm_, viewProjection);
-
+	
 }
 
 void Player::InitializeFloatingGimmick() {
@@ -68,13 +68,13 @@ void Player::UpdateFloatingGimmick() {
 	const uint16_t A_frame = 120;
 
 	//1フレームでのパラメーター加算値
-	const float Step = 2.0f * M_PI / A_frame;
+	const float Step = (float)(2.0f * M_PI / A_frame);
 
 	//パラメーターを1ステップ分加算
 	floatingParameter_ += Step;
 
 	//２πを超えたら０に戻す
-	floatingParameter_ = std::fmod(floatingParameter_, 2.0f * M_PI);
+	floatingParameter_ = (float)std::fmod(floatingParameter_, 2.0f * M_PI);
 
 	//
 	const float Width_F = 0.5f;
