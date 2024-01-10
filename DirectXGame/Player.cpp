@@ -45,7 +45,7 @@ void Player::Update() {
 }
 
 void Player::Draw(const ViewProjection& viewProjection) {
-	
+
 	modelBody_->Draw(worldTransformBody_, viewProjection);
 	
 	modelHead_->Draw(worldTransformHead_, viewProjection);
