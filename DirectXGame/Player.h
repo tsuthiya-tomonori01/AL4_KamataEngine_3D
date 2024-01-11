@@ -50,11 +50,4 @@ private:
 
 	float floatingParameter_ = 0.0f;
 
-	enum models_ {
-
-		kModelIndexBody,
-		kModelIndexHead,
-		kModelIndexL_arm,
-		kModelIndexR_arm,
-	};
 };

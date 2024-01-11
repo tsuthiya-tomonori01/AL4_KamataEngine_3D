@@ -9,6 +9,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Skydome.h"
 #include "Ground.h"
 #include "FollowCamera.h"
@@ -63,6 +64,8 @@ private: // メンバ変数
 
 	std::unique_ptr<Ground> ground_;
 
+	std::unique_ptr<Enemy> enemy_;
+
 	std::unique_ptr<FollowCamera> followCamera_;
 
 	DebugCamera* debugCamera_ = nullptr;
@@ -78,6 +81,8 @@ private: // メンバ変数
 	std::unique_ptr<Model> modelFighterHead_;
 	std::unique_ptr<Model> modelFighterL_arm;
 	std::unique_ptr<Model> modelFighterR_arm;
+
+	std::unique_ptr<Model> modelEnemy_;
 
 	ViewProjection viewProjection_;
 

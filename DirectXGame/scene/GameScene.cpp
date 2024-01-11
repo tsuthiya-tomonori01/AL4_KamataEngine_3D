@@ -26,12 +26,12 @@ void GameScene::Initialize() {
 	debugCamera_ = new DebugCamera(1280, 720);
 	//debugCamera_->SetFarZ(1600.0f);
 
-	/*modelFighterBody_.reset(Model::CreateFromOBJ("", true));
-	modelFighterHead_.reset(Model::CreateFromOBJ("", true));
-	modelFighterL_arm.reset(Model::CreateFromOBJ("", true));
-	modelFighterR_arm.reset(Model::CreateFromOBJ("", true));*/
+	modelFighterBody_.reset(Model::CreateFromOBJ("float_Body", true));
+	modelFighterHead_.reset(Model::CreateFromOBJ("float_Head", true));
+	modelFighterL_arm.reset(Model::CreateFromOBJ("float_L_arm", true));
+	modelFighterR_arm.reset(Model::CreateFromOBJ("float_R_arm", true));
 
-	model_.reset(Model::CreateFromOBJ("float", true));
+	//model_.reset(Model::CreateFromOBJ("float", true));
 
 	std::vector<Model*> model = {
 	    modelFighterBody_.get(), modelFighterHead_.get(), modelFighterL_arm.get(),
@@ -39,6 +39,12 @@ void GameScene::Initialize() {
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize(model);
+
+	modelEnemy_.reset(Model::CreateFromOBJ("needle_Body", true));
+
+	std::vector<Model*> modelE = { modelEnemy_.get() };
+	enemy_ = std::make_unique<Enemy>();
+	enemy_->Initialize(modelE);
 
 	modelSkydome_.reset(Model::CreateFromOBJ("skydome", true));
 
@@ -61,6 +67,7 @@ void GameScene::Initialize() {
 void GameScene::Update() {
 
 	player_->Update();
+	enemy_->Update();
 	skydome_->Update();
 	ground_->Update();
 
@@ -121,6 +128,7 @@ void GameScene::Draw() {
 	/// </summary>
 
 	player_->Draw(viewProjection_);
+	enemy_->Draw(viewProjection_);
 	skydome_->Draw(viewProjection_);
 	ground_->Draw(viewProjection_);
 

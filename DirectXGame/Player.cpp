@@ -13,6 +13,22 @@ void Player::Initialize(const std::vector<Model*>& models) {
 	worldTransformHead_.Initialize();
 	worldTransformL_arm_.Initialize();
 	worldTransformR_arm_.Initialize();
+
+	worldTransformBody_.translation_.y = 0.0f;
+	worldTransformHead_.translation_.y = 1.5f;
+
+	worldTransformL_arm_.translation_.y = 1.25f;
+	worldTransformL_arm_.translation_.x = -0.5f;
+
+	worldTransformR_arm_.translation_.y = 1.25f;
+	worldTransformR_arm_.translation_.x = 0.5f;
+
+	InitializeFloatingGimmick();
+
+	worldTransformBody_.parent_ = &worldTransform_;
+	worldTransformHead_.parent_ = &worldTransformBody_;
+	worldTransformL_arm_.parent_ = &worldTransformBody_;
+	worldTransformR_arm_.parent_ = &worldTransformBody_;
 }
 
 void Player::Update() { 
@@ -42,17 +58,22 @@ void Player::Update() {
 
 		worldTransform_.rotation_.y = std::atan2(velocity_.x, velocity_.z);
 	}
+
+	UpdateFloatingGimmick();
+
+	worldTransformBody_.UpdateMatrix();
+	worldTransformHead_.UpdateMatrix();
+	worldTransformL_arm_.UpdateMatrix();
+	worldTransformR_arm_.UpdateMatrix();
+
 }
 
 void Player::Draw(const ViewProjection& viewProjection) {
 
-	modelBody_->Draw(worldTransformBody_, viewProjection);
-	
-	modelHead_->Draw(worldTransformHead_, viewProjection);
-
-	modelL_arm_->Draw(worldTransformL_arm_, viewProjection);
-
-	modelR_arm_->Draw(worldTransformR_arm_, viewProjection);
+	models_[0]->Draw(worldTransformBody_, viewProjection);
+	models_[1]->Draw(worldTransformHead_, viewProjection);
+	models_[2]->Draw(worldTransformL_arm_, viewProjection);
+	models_[3]->Draw(worldTransformR_arm_, viewProjection);
 	
 }
 
@@ -80,7 +101,7 @@ void Player::UpdateFloatingGimmick() {
 	const float Width_F = 0.5f;
 
 	//
-	worldTransform_.translation_.y = std::sin(floatingParameter_) * Width_F;
+	worldTransformBody_.translation_.y = std::sin(floatingParameter_) * Width_F;
 
 }
 
