@@ -9,6 +9,20 @@ void Enemy::Initialize(const std::vector<Model*>& models) {
 	BaseCharacter::Initialize(models);
 
 	worldTransformEnemy_.Initialize();
+	worldTransformEnemy_Left_.Initialize();
+	worldTransformEnemy_Right_.Initialize();
+
+	worldTransformEnemy_.translation_.y = 0.1f;
+
+	worldTransformEnemy_Left_.translation_.y = 1.0f;
+	worldTransformEnemy_Left_.translation_.x = -1.0f;
+
+	worldTransformEnemy_Right_.translation_.y = 1.0f;
+	worldTransformEnemy_Right_.translation_.x = 1.0f;
+
+	worldTransformEnemy_.parent_ = &worldTransform_;
+	worldTransformEnemy_Left_.parent_ = &worldTransformEnemy_;
+	worldTransformEnemy_Right_.parent_ = &worldTransformEnemy_;
 }
 
 void Enemy::Update() {
@@ -28,10 +42,13 @@ void Enemy::Update() {
 	worldTransformEnemy_.translation_ = Add(move,worldTransformEnemy_.translation_);
 
 	worldTransformEnemy_.UpdateMatrix();
+	worldTransformEnemy_Left_.UpdateMatrix();
+	worldTransformEnemy_Right_.UpdateMatrix();
 }
 
 void Enemy::Draw(const ViewProjection& viewProjection) {
 
 	models_[0]->Draw(worldTransformEnemy_, viewProjection);
-
+	models_[1]->Draw(worldTransformEnemy_Left_, viewProjection);
+	models_[2]->Draw(worldTransformEnemy_Right_, viewProjection);
 }

@@ -41,8 +41,10 @@ void GameScene::Initialize() {
 	player_->Initialize(model);
 
 	modelEnemy_.reset(Model::CreateFromOBJ("needle_Body", true));
+	modelEnemyL_.reset(Model::CreateFromOBJ("needle_L_arm",true));
+	modelEnemyR_.reset(Model::CreateFromOBJ("needle_R_arm", true));
 
-	std::vector<Model*> modelE = { modelEnemy_.get() };
+	std::vector<Model*> modelE = {modelEnemy_.get(), modelEnemyL_.get(), modelEnemyR_.get()};
 	enemy_ = std::make_unique<Enemy>();
 	enemy_->Initialize(modelE);
 

@@ -13,6 +13,8 @@ public:
 private:
 
 	WorldTransform worldTransformEnemy_;
+	WorldTransform worldTransformEnemy_Right_;
+	WorldTransform worldTransformEnemy_Left_;
 
 	ViewProjection* viewProjection_;
 };
