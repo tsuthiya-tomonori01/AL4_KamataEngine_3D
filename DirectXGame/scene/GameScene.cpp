@@ -31,11 +31,13 @@ void GameScene::Initialize() {
 	modelFighterL_arm.reset(Model::CreateFromOBJ("float_L_arm", true));
 	modelFighterR_arm.reset(Model::CreateFromOBJ("float_R_arm", true));
 
+	modelHammer_.reset(Model::CreateFromOBJ("hammer", true));
+
 	//model_.reset(Model::CreateFromOBJ("float", true));
 
 	std::vector<Model*> model = {
 	    modelFighterBody_.get(), modelFighterHead_.get(), modelFighterL_arm.get(),
-	    modelFighterR_arm.get()};
+	    modelFighterR_arm.get(), modelHammer_.get()};
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize(model);

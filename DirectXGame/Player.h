@@ -7,6 +7,8 @@
 
 #include "BaseCharacter.h"
 
+#include <optional>
+
 class Player : public BaseCharacter {
 
 public:
@@ -30,12 +32,21 @@ public:
 	////浮遊ギミックに更新
 	void UpdateFloatingGimmick();
 
+	void BehaviorRootInitialize();
+
+	void BehaviorRootUpdate();
+
+	void BehaviorAttackInitialize();
+
+	void BehaviorAttackUpdate();
+
 private:
 	 
 	WorldTransform worldTransformBody_;
 	WorldTransform worldTransformHead_;
 	WorldTransform worldTransformL_arm_;
 	WorldTransform worldTransformR_arm_;
+	WorldTransform worldTransformHammer_;
 
 	Model* modelBody_ = nullptr;
 	Model* modelHead_ = nullptr;
@@ -49,5 +60,14 @@ private:
 	Vector3 velocity_ = {};
 
 	float floatingParameter_ = 0.0f;
+
+	enum class Behavior {
+		kRoot,
+		kAttack,
+	};
+
+	Behavior behavior_ = Behavior::kRoot;
+
+	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 
 };
